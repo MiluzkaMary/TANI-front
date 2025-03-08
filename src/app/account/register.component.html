@@ -1,0 +1,80 @@
+﻿<h3 class="card-header">Registro</h3>
+<div class="card-body">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+            <label class="form-label">Nombre Completo</label>
+            <input type="text" formControlName="nombreCompleto" class="form-control" 
+                [ngClass]="{ 'is-invalid': submitted && f.nombreCompleto.errors }" />
+            <div *ngIf="submitted && f.nombreCompleto.errors" class="invalid-feedback">
+                <div *ngIf="f.nombreCompleto.errors.required">El nombre completo es obligatorio</div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Fecha de Nacimiento</label>
+            <input type="date" formControlName="fechaNacimiento" class="form-control" 
+                [ngClass]="{ 'is-invalid': submitted && f.fechaNacimiento.errors }" />
+            <div *ngIf="submitted && f.fechaNacimiento.errors" class="invalid-feedback">
+                <div *ngIf="f.fechaNacimiento.errors.required">La fecha de nacimiento es obligatoria</div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Correo Electrónico</label>
+            <input type="email" formControlName="email" class="form-control" 
+                [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+            <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                <div *ngIf="f.email.errors.required">El correo electrónico es obligatorio</div>
+                <div *ngIf="f.email.errors.email">Debe ingresar un correo válido</div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Teléfono</label>
+            <input type="tel" formControlName="telefono" class="form-control" 
+                [ngClass]="{ 'is-invalid': submitted && f.telefono.errors }" />
+            <div *ngIf="submitted && f.telefono.errors" class="invalid-feedback">
+                <div *ngIf="f.telefono.errors.required">El teléfono es obligatorio</div>
+                <div *ngIf="f.telefono.errors.pattern">Debe ingresar un número de teléfono válido</div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="mb-3 col">
+                <label class="form-label">Contraseña</label>
+                <input type="password" formControlName="contrasenia" class="form-control" 
+                    [ngClass]="{ 'is-invalid': submitted && f.contrasenia.errors }" />
+                <div *ngIf="submitted && f.contrasenia.errors" class="invalid-feedback">
+                    <div *ngIf="f.contrasenia.errors.required">La contraseña es obligatoria</div>
+                    <div *ngIf="f.contrasenia.errors.minlength">Debe tener al menos 6 caracteres</div>
+                </div>
+            </div>
+            <div class="mb-3 col">
+                <label class="form-label">Confirmar Contraseña</label>
+                <input type="password" formControlName="confirmPassword" class="form-control" 
+                    [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }" />
+                <div *ngIf="submitted && f.confirmPassword.errors" class="invalid-feedback">
+                    <div *ngIf="f.confirmPassword.errors.required">Debe confirmar la contraseña</div>
+                    <div *ngIf="f.confirmPassword.errors.mustMatch">Las contraseñas no coinciden</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-3 form-check">
+            <input type="checkbox" formControlName="acceptTerms" class="form-check-input" 
+                [ngClass]="{ 'is-invalid': submitted && f.acceptTerms.errors }" />
+            <label class="form-check-label">Acepto los términos y condiciones</label>
+            <div *ngIf="submitted && f.acceptTerms.errors" class="invalid-feedback">
+                <div *ngIf="f.acceptTerms.errors.requiredTrue">Debe aceptar los términos y condiciones</div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <button [disabled]="submitting" class="btn btn-primary">
+                <span *ngIf="submitting" class="spinner-border spinner-border-sm me-1"></span>
+                Registrar
+            </button>
+            <a routerLink="../login" class="btn btn-link">Cancelar</a>
+        </div>
+    </form>
+</div>
