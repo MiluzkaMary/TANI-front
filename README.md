@@ -1,5 +1,4 @@
-# angular-15-signup-verification-boilerplate
+# FrontEnd TANI
 
-Angular 15 Auth Boilerplate - Sign Up with Verification, Login and Forgot Password
-
-Documentation at https://jasonwatmore.com/angular-15-auth-boilerplate-sign-up-with-verification-login-and-forgot-password
+Este es el repositorio del frontend de la aplicación web TANI.  
+Aquí encontrarás el código fuente del cliente desarrollado en Angular, encargado de la interfaz y la interacción con el backend.  
