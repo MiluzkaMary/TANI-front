@@ -54,8 +54,6 @@ export class AccountService {
         this.router.navigate(['/account/login']);
     }
 
-    
-
     register(account: Account) {
         return this.http.post(`${baseUrl}/crear-cuenta`, account);
     }
@@ -65,7 +63,7 @@ export class AccountService {
     }
 
     forgotPassword(email: string) {
-        return this.http.post(`${baseUrl}/forgot-password`, { email });
+        return this.http.post(`${baseUrl}/recuperar-contrasenia`, { correo: email });
     }
 
     validateResetToken(token: string) {
@@ -113,8 +111,6 @@ export class AccountService {
     // helper methods
 
     private refreshTokenTimeout?: any;
-
-    
 
     private startRefreshTokenTimer() {
         console.warn('⚠️ Refresco de token deshabilitado temporalmente');
