@@ -1,6 +1,11 @@
 ﻿<div class="p-4">
     <div class="container">
-        <h1>Hi {{account?.nombre}}!</h1>
-            <p>Bienvenido a la Pagina de TANI!!</p>
+        <h1>Hola {{account?.nombre}}!</h1>
+        <p>Bienvenido a la Página de TANI!!</p>
+
+        <!-- Botón visible solo para administradores -->
+        <button *ngIf="account?.tipoUsuario === 'ADMINISTRADOR'" class="btn btn-primary" routerLink="/productos/crear">
+            Crear Producto
+        </button>
     </div>
 </div>

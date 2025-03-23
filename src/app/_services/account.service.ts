@@ -26,7 +26,8 @@ export class AccountService {
         return this.accountSubject.value;
     }
 
-    login(email: string, password: string) {
+    /**
+     * login(email: string, password: string) {
         return this.http.post<any>(`${baseUrl}/iniciar-sesion`, { email, password })
             .pipe(map(tokenDTO => {
                 const account = { jwtToken: tokenDTO.jwt }; // Adaptar si es necesario
@@ -36,8 +37,37 @@ export class AccountService {
                 return account;
             }));
     }
+     */
+
+        login(email: string, password: string) {
+        return this.http.post<any>(`${baseUrl}/iniciar-sesion`, { email, password })
+            .pipe(map((usuario: any) => {
+                // Transformar los datos recibidos en una instancia de Account
+                const account: Account = {
+                    id: usuario.idUsuario.toString(), // Convertir a string si es necesario
+                    nombre: usuario.nombre,
+                    fechaNacimiento: usuario.fechaNacimiento,
+                    telefono: usuario.telefono,
+                    correo: usuario.correo,
+                    tipoUsuario: usuario.tipoUsuario, // 'USUARIO' o 'ADMINISTRADOR'
+                };
     
-    refreshToken() {
+                // Guardar la instancia transformada en el BehaviorSubject
+                this.accountSubject.next(account);
+    
+                // Redirigir según el tipo de usuario
+                if (account.tipoUsuario === 'ADMINISTRADOR') {
+                    this.router.navigate(['/home']);
+                } else {
+                    this.router.navigate(['/home']);
+                }
+    
+                return account;
+            }));
+    }
+    
+    /**
+     * refreshToken() {
         return this.http.post<any>(`${baseUrl}/refresh-token`, {}, { withCredentials: true })
             .pipe(map((account) => {
                 this.accountSubject.next(account);
@@ -45,16 +75,19 @@ export class AccountService {
                 return account;
             }));
     }
+     */
     
 
     logout() {
-        this.http.post<any>(`${baseUrl}/revoke-token`, {}, { withCredentials: true }).subscribe();
-        this.stopRefreshTokenTimer();
+        // Limpiar el estado del usuario
         this.accountSubject.next(null);
+    
+        // Redirigir al usuario a la página de inicio de sesión
         this.router.navigate(['/account/login']);
     }
 
-    register(account: Account) {
+        register(account: Account) {
+        account.tipoUsuario = 'USUARIO'; // Asegurar que siempre sea 'USUARIO'
         return this.http.post(`${baseUrl}/crear-cuenta`, account);
     }
 
@@ -113,8 +146,7 @@ export class AccountService {
     private refreshTokenTimeout?: any;
 
     private startRefreshTokenTimer() {
-        console.warn('⚠️ Refresco de token deshabilitado temporalmente');
-        return;
+        //Metodo prueba Tokens
     }
 
     private stopRefreshTokenTimer() {

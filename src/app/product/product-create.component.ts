@@ -43,17 +43,29 @@ export class ProductCreateComponent implements OnInit {
 
     onSubmit() {
         this.submitted = true;
-
+    
         if (this.form.invalid) {
             return;
         }
-
+    
         this.submitting = true;
-        const product: Product = this.form.value;
+    
+        // Transformar los datos del formulario
+        const product: Product = {
+            registroProductoDTO: {
+                nombre: this.form.value.nombre,
+                descripcion: this.form.value.descripcion,
+                tipoCalzado: this.form.value.tipoCalzado,
+                imagen: this.form.value.imagen,
+                precio: this.form.value.precio
+            },
+            tallas: this.form.value.tallas
+        };
+    
         this.productService.create(product)
             .subscribe({
                 next: () => {
-                    this.router.navigate(['/productos']);
+                    this.router.navigate(['/']); // redirigir a la página principal
                 },
                 error: error => {
                     console.error(error);
