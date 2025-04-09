@@ -1,0 +1,131 @@
+<div class="auth-container">
+  <div class="auth-card">
+    <div class="auth-header">
+      <h2>{{ isLoginView ? 'Iniciar Sesión' : 'Registrarse' }}</h2>
+    </div>
+
+    <!-- Login Form -->
+    <form *ngIf="isLoginView" [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()" @fadeSlide>
+      <div class="form-group">
+        <label for="login-email">Email</label>
+        <input
+          type="email"
+          id="login-email"
+          formControlName="email"
+          placeholder="correo@ejemplo.com"
+          [class.is-invalid]="loginEmail?.invalid && (loginEmail?.dirty || loginEmail?.touched)"
+        >
+        <div class="error-message" *ngIf="loginEmail?.invalid && (loginEmail?.dirty || loginEmail?.touched)">
+          <span *ngIf="loginEmail?.errors?.['required']">El email es requerido</span>
+          <span *ngIf="loginEmail?.errors?.['email']">Ingrese un email válido</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="login-password">Contraseña</label>
+        <input
+          type="password"
+          id="login-password"
+          formControlName="password"
+          placeholder="Contraseña"
+          [class.is-invalid]="loginPassword?.invalid && (loginPassword?.dirty || loginPassword?.touched)"
+        >
+        <div class="error-message" *ngIf="loginPassword?.invalid && (loginPassword?.dirty || loginPassword?.touched)">
+          <span *ngIf="loginPassword?.errors?.['required']">La contraseña es requerida</span>
+          <span *ngIf="loginPassword?.errors?.['minlength']">La contraseña debe tener al menos 8 caracteres</span>
+        </div>
+      </div>
+
+      <button
+        type="submit"
+        class="submit-btn"
+        [disabled]="loginForm.invalid || loading"
+      >
+        <span *ngIf="!loading">Iniciar Sesión</span>
+        <div *ngIf="loading" class="spinner"></div>
+      </button>
+
+      <div class="toggle-section">
+        <p>¿No tienes una cuenta?</p>
+        <button type="button" class="toggle-button" (click)="toggleView()">Registrarse</button>
+      </div>
+    </form>
+
+    <!-- Register Form -->
+    <form *ngIf="!isLoginView" [formGroup]="registerForm" (ngSubmit)="onRegisterSubmit()" @fadeSlide>
+      <div class="form-group">
+        <label for="register-fullname">Nombre Completo</label>
+        <input
+          type="text"
+          id="register-fullname"
+          formControlName="fullName"
+          placeholder="Nombre Completo"
+          [class.is-invalid]="registerFullName?.invalid && (registerFullName?.dirty || registerFullName?.touched)"
+        >
+        <div class="error-message" *ngIf="registerFullName?.invalid && (registerFullName?.dirty || registerFullName?.touched)">
+          <span *ngIf="registerFullName?.errors?.['required']">El nombre es requerido</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="register-email">Email</label>
+        <input
+          type="email"
+          id="register-email"
+          formControlName="email"
+          placeholder="correo@ejemplo.com"
+          [class.is-invalid]="registerEmail?.invalid && (registerEmail?.dirty || registerEmail?.touched)"
+        >
+        <div class="error-message" *ngIf="registerEmail?.invalid && (registerEmail?.dirty || registerEmail?.touched)">
+          <span *ngIf="registerEmail?.errors?.['required']">El email es requerido</span>
+          <span *ngIf="registerEmail?.errors?.['email']">Ingrese un email válido</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="register-password">Contraseña</label>
+        <input
+          type="password"
+          id="register-password"
+          formControlName="password"
+          placeholder="Contraseña"
+          [class.is-invalid]="registerPassword?.invalid && (registerPassword?.dirty || registerPassword?.touched)"
+        >
+        <div class="error-message" *ngIf="registerPassword?.invalid && (registerPassword?.dirty || registerPassword?.touched)">
+          <span *ngIf="registerPassword?.errors?.['required']">La contraseña es requerida</span>
+          <span *ngIf="registerPassword?.errors?.['minlength']">La contraseña debe tener al menos 8 caracteres</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="register-confirm-password">Confirmar Contraseña</label>
+        <input
+          type="password"
+          id="register-confirm-password"
+          formControlName="confirmPassword"
+          placeholder="Confirmar Contraseña"
+          [class.is-invalid]="registerConfirmPassword?.invalid && (registerConfirmPassword?.dirty || registerConfirmPassword?.touched)"
+        >
+        <div class="error-message" *ngIf="registerConfirmPassword?.invalid && (registerConfirmPassword?.dirty || registerConfirmPassword?.touched)">
+          <span *ngIf="registerConfirmPassword?.errors?.['required']">Confirme su contraseña</span>
+          <span *ngIf="registerConfirmPassword?.errors?.['passwordMismatch']">Las contraseñas no coinciden</span>
+        </div>
+      </div>
+
+      <button
+        type="submit"
+        class="submit-btn"
+        [disabled]="registerForm.invalid || loading"
+      >
+        <span *ngIf="!loading">Registrarse</span>
+        <div *ngIf="loading" class="spinner"></div>
+      </button>
+
+      <div class="toggle-section">
+        <p>¿Ya tienes una cuenta?</p>
+        <button type="button" class="toggle-button" (click)="toggleView()">Volver a Iniciar Sesión</button>
+      </div>
+    </form>
+  </div>
+</div>
+

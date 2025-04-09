@@ -1,0 +1,157 @@
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  background: linear-gradient(to right, #1afff8, #0d47a1);
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 450px;
+  background-color: white;
+  border-radius: 8px;
+  padding: 30px;
+  box-shadow: 0 0 15px #99297733;
+  transition: all 0.3s ease;
+}
+
+.auth-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 20px #99297755;
+}
+
+.auth-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.auth-header h2 {
+  color: #0d47a1;
+  font-weight: 600;
+  margin: 0;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+  color: #333;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+  transition: border-color 0.3s;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #0d47a1;
+  box-shadow: 0 0 0 2px #99297733;
+}
+
+.form-group input.is-invalid {
+  border-color: #dc3545;
+}
+
+.error-message {
+  color: #dc3545;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 12px;
+  background-color: #0d47a1;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.submit-btn:hover {
+  background-color: #0d47a1; /* Replaced darken(#992977, 10%) with a darker shade */
+}
+
+.submit-btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.social-login {
+  margin-top: 20px;
+}
+
+.toggle-section {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.toggle-section p {
+  margin-bottom: 8px;
+  color: #666;
+}
+
+.toggle-section .toggle-button {
+  background: transparent;
+  border: 2px solid #0d47a1;
+  color: #0d47a1;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.toggle-section .toggle-button:hover {
+  background: #99297720;
+}
+
+/* Custom spinner animation */
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: #fff;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Animation classes */
+.fade-in {
+  animation: fadeIn 0.3s;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+

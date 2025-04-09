@@ -1,11 +1,135 @@
-﻿<div class="p-4">
-    <div class="container">
-        <h1>Hola {{account?.nombre}}!</h1>
-        <p>Bienvenido a la Página de TANI!!</p>
-
-        <!-- Botón visible solo para administradores -->
-        <button *ngIf="account?.tipoUsuario === 'ADMINISTRADOR'" class="btn btn-primary" routerLink="/productos/crear">
-            Crear Producto
-        </button>
+﻿<!-- Navigation Bar -->
+<header class="navbar">
+  <div class="navbar-container">
+    <div class="navbar-logo">
+      <a href="/">
+        <img src="assets/images/logo.png" alt="ShoeStore Logo" class="logo-image">
+      </a>
     </div>
-</div>
+
+    <div class="search-container">
+      <input type="text" placeholder="Buscar productos, marcas y más..." class="search-input">
+      <button class="search-button">
+        <i class="fa fa-search"></i>
+      </button>
+    </div>
+
+    <div class="navbar-actions">
+      <a href="/account" class="navbar-action">
+        <i class="fa fa-user"></i>
+        <span>Mi cuenta</span>
+      </a>
+      <a href="/favorites" class="navbar-action">
+        <i class="fa fa-heart"></i>
+        <span>Favoritos</span>
+      </a>
+      <a href="/cart" class="navbar-action cart">
+        <i class="fa fa-shopping-cart"></i>
+        <span>Carrito</span>
+      </a>
+      <button class="login-button" routerLink="/auth">Iniciar sesión</button>
+    </div>
+  </div>
+</header>
+
+<!-- Promotional Banner/Carousel -->
+<section class="banner-section">
+  <div class="carousel-container"
+       (mouseenter)="pauseAutoSlide()"
+       (mouseleave)="resumeAutoSlide()">
+    <div class="carousel-slides" [style.transform]="'translateX(-' + (currentSlide * 100) + '%)'">
+      <div *ngFor="let promo of promotions" class="carousel-slide">
+        <a [href]="promo.link">
+          <img [src]="promo.image" [alt]="promo.title" class="carousel-image">
+        </a>
+      </div>
+    </div>
+    <div class="carousel-controls">
+      <button class="carousel-control prev" (click)="prevSlide()">
+        <i class="fa fa-chevron-left"></i>
+      </button>
+      <button class="carousel-control next" (click)="nextSlide()">
+        <i class="fa fa-chevron-right"></i>
+      </button>
+    </div>
+    <div class="carousel-indicators">
+      <span *ngFor="let promo of promotions; let i = index"
+            class="indicator"
+            [class.active]="i === currentSlide"
+            (click)="goToSlide(i)"></span>
+    </div>
+  </div>
+</section>
+
+<!-- Featured Products -->
+<section class="products-section">
+  <div class="section-header">
+    <h2>Productos destacados</h2>
+    <a href="/products" class="view-all">Ver todos</a>
+  </div>
+
+  <div class="products-grid">
+    <div *ngFor="let product of featuredProducts" class="product-card">
+      <div class="product-image-container">
+        <img [src]="product.image" [alt]="product.name" class="product-image">
+        <span *ngIf="product.discount" class="discount-badge">-{{product.discount}}%</span>
+      </div>
+      <div class="product-info">
+        <h3 class="product-name">{{product.name}}</h3>
+        <div class="product-price">
+          <span *ngIf="product.discount" class="original-price">${{product.price}}</span>
+          <span class="current-price">
+            ${{product.discount ? (product.price * (1 - product.discount/100)).toFixed(2) : product.price}}
+          </span>
+        </div>
+        <div *ngIf="product.discount" class="discount-info">
+          {{product.discount}}% OFF
+        </div>
+      </div>
+      <button class="add-to-cart-button">
+        <i class="fa fa-shopping-cart"></i>
+        Agregar al carrito
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-section">
+      <h3>Atención al cliente</h3>
+      <ul>
+        <li><a href="/contact">Contacto</a></li>
+        <li><a href="/faq">Preguntas frecuentes</a></li>
+        <li><a href="/returns">Devoluciones</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-section">
+      <h3>Acerca de nosotros</h3>
+      <ul>
+        <li><a href="/about">Quiénes somos</a></li>
+        <li><a href="/stores">Nuestras tiendas</a></li>
+        <li><a href="/careers">Trabaja con nosotros</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-section">
+      <h3>Síguenos</h3>
+      <div class="social-links">
+        <a href="#" class="social-link"><i class="fa fa-facebook"></i></a>
+        <a href="#" class="social-link"><i class="fa fa-instagram"></i></a>
+        <a href="#" class="social-link"><i class="fa fa-twitter"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>© 2025 ShoeStore. Todos los derechos reservados.</p>
+    <div class="footer-links">
+      <a href="/terms">Términos y condiciones</a>
+      <a href="/privacy">Política de privacidad</a>
+    </div>
+  </div>
+</footer>
