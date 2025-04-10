@@ -1,11 +1,53 @@
-﻿<div class="p-4">
-    <div class="container">
-        <h1>Hola {{account?.nombre}}!</h1>
-        <p>Bienvenido a la Página de TANI!!</p>
+﻿<div class="container mt-4">
+    <!-- Sección de bienvenida -->
+    <div class="p-4">
+        <div class="container">
+            <h1>Hola {{ account?.nombre }}!</h1>
+            <p *ngIf="account?.tipoUsuario === 'ADMINISTRADOR'">Gestión de productos</p>
+            <p *ngIf="account?.tipoUsuario !== 'ADMINISTRADOR'">Explora nuestro catálogo y encuentra tus productos favoritos.</p>
 
-        <!-- Botón visible solo para administradores -->
-        <button *ngIf="account?.tipoUsuario === 'ADMINISTRADOR'" class="btn btn-primary" routerLink="/productos/crear">
-            Crear Producto
-        </button>
+            <!-- Botón visible solo para administradores -->
+            <button *ngIf="account?.tipoUsuario === 'ADMINISTRADOR'" class="btn btn-primary" routerLink="/productos/crear">
+                Crear Producto
+            </button>
+        </div>
+    </div>
+
+    <!-- Sección de productos -->
+    <div class="row">
+        <div class="col-md-4 mb-4" *ngFor="let product of products">
+            <div class="card h-100">
+                <!-- Imagen del producto -->
+                <img [src]="product.registroProductoDTO?.imagen" class="card-img-top" alt="{{ product.registroProductoDTO?.nombre }}">
+                
+                <div class="card-body">
+                    <!-- Nombre del producto -->
+                    <h5 class="card-title">{{ product.registroProductoDTO?.nombre }}</h5>
+                    <!-- Descripción del producto -->
+                    <p class="card-text">{{ product.registroProductoDTO?.descripcion }}</p>
+                    <!-- Precio del producto -->
+                    <p class="card-text"><strong>Precio:</strong> ${{ product.registroProductoDTO?.precio }}</p>
+                </div>
+
+                <div class="card-footer">
+                    <!-- Botones según el tipo de usuario -->
+                    <button 
+                        *ngIf="account?.tipoUsuario === 'ADMINISTRADOR'" 
+                        class="btn btn-warning me-2">
+                        Editar
+                    </button>
+                    <button 
+                        *ngIf="account?.tipoUsuario === 'ADMINISTRADOR'" 
+                        class="btn btn-danger">
+                        Eliminar
+                    </button>
+                    <button 
+                        *ngIf="account?.tipoUsuario !== 'ADMINISTRADOR'" 
+                        class="btn btn-success">
+                        Añadir al Carrito
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
