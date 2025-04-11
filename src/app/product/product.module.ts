@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { FileUploadModule } from 'primeng/fileupload'; // Importar FileUploadModule
 
 import { ProductRoutingModule } from './product-routing.module';
 import { LayoutComponent } from './layout.component';
@@ -10,7 +11,8 @@ import { ProductCreateComponent } from './product-create.component';
     imports: [
         CommonModule,
         ReactiveFormsModule,
-        ProductRoutingModule
+        ProductRoutingModule,
+        FileUploadModule // Agregar FileUploadModule aquí
     ],
     declarations: [
         LayoutComponent,

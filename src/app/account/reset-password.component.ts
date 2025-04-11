@@ -13,7 +13,8 @@ enum TokenStatus {
 
 @Component({
     selector: 'app-reset-password',
-    templateUrl: './reset-password.component.html'
+    templateUrl: './reset-password.component.html',
+    standalone: false
 })
 export class ResetPasswordComponent implements OnInit {
     form!: FormGroup;

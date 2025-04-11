@@ -26,12 +26,16 @@
         </div>
 
         <div class="mb-3">
-            <label class="form-label">Imagen</label>
-            <input type="text" formControlName="imagen" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.imagen.errors }" />
-            <div *ngIf="submitted && f.imagen?.errors" class="invalid-feedback">
-                <div *ngIf="f.imagen.errors?.required">La imagen es obligatoria</div>
+            <label for="imagen" class="form-label">Imagen</label>
+            <input type="file" class="form-control" id="imagen" (change)="onFileSelected($event)" accept="image/*" />
+            
+            <div *ngIf="previewUrl" class="mt-3">
+              <p>Previsualización:</p>
+              <img [src]="previewUrl" class="img-thumbnail" style="max-width: 200px;" />
             </div>
-        </div>
+          </div>
+          
+        
 
         <div class="mb-3">
             <label class="form-label">Precio</label>

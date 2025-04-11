@@ -7,7 +7,10 @@ import { AccountService, AlertService } from '@app/_services';
 import { MustMatch } from '@app/_helpers';
 import { Account } from '@app/_models';
 
-@Component({ templateUrl: 'register.component.html' })
+@Component({
+    templateUrl: 'register.component.html',
+    standalone: false
+})
 export class RegisterComponent implements OnInit {
     form!: FormGroup;
     submitting = false;

@@ -1,4 +1,4 @@
-﻿import { NgModule, APP_INITIALIZER } from '@angular/core';
+﻿import { NgModule, inject, provideAppInitializer } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
@@ -12,6 +12,8 @@ import { AccountService } from './_services';
 import { AppComponent } from './app.component';
 import { AlertComponent } from './_components';
 import { HomeComponent } from './home';
+import { FileUploadModule } from 'primeng/fileupload';
+
 
 // Importa el nuevo módulo de productos
 import { ProductModule } from './product/product.module';
@@ -23,8 +25,12 @@ import { ProductModule } from './product/product.module';
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,
         ReactiveFormsModule,
-        AppRoutingModule], providers: [
-        { provide: APP_INITIALIZER, useFactory: appInitializer, multi: true, deps: [AccountService] },
+        AppRoutingModule,
+        FileUploadModule], providers: [
+        provideAppInitializer(() => {
+        const initializerFn = (appInitializer)(inject(AccountService));
+        return initializerFn();
+      }),
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
         // provider used to create fake backend

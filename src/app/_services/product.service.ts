@@ -9,13 +9,14 @@ const baseUrl = `${environment.apiUrl}/api/productos`;
 export class ProductService {
     constructor(private http: HttpClient) { }
 
-    create(product: Product) {
-        return this.http.post(`${baseUrl}/crear-producto`, product);
+    create(formData: FormData) {
+        return this.http.post(`${baseUrl}/crear-producto`, formData);
     }
 
     getAll() {
-        return this.http.get<Product[]>(`${baseUrl}`);
+        return this.http.get<Product[]>(baseUrl);
     }
+    
 
 
 }

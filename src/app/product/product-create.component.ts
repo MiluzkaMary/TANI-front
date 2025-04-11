@@ -2,13 +2,19 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ProductService } from '@app/_services/product.service';
-import { Product } from '@app/_models/product';
 
-@Component({ templateUrl: 'product-create.component.html' })
+@Component({
+    templateUrl: 'product-create.component.html',
+    selector: 'app-product-create',
+    standalone: false
+})
 export class ProductCreateComponent implements OnInit {
     form!: FormGroup;
     submitting = false;
     submitted = false;
+    selectedFile: File | null = null; // Propiedad para el archivo seleccionado
+    previewUrl: string | ArrayBuffer | null = null;
+
 
     constructor(
         private formBuilder: FormBuilder,
@@ -21,7 +27,6 @@ export class ProductCreateComponent implements OnInit {
             nombre: ['', Validators.required],
             descripcion: ['', Validators.required],
             tipoCalzado: ['', Validators.required],
-            imagen: ['', Validators.required],
             precio: [0, [Validators.required, Validators.min(0)]],
             tallas: this.formBuilder.array([])
         });
@@ -41,31 +46,50 @@ export class ProductCreateComponent implements OnInit {
         this.tallas.removeAt(index);
     }
 
-    onSubmit() {
+    onFileSelected(event: any): void {
+        const file = event.target.files[0];
+        if (file) {
+            this.selectedFile = file;
+    
+            const reader = new FileReader();
+            reader.onload = () => {
+                this.previewUrl = reader.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+
+        onSubmit() {
         this.submitted = true;
     
-        if (this.form.invalid) {
+        if (this.form.invalid || !this.selectedFile) {
             return;
         }
     
         this.submitting = true;
     
-        // Transformar los datos del formulario
-        const product: Product = {
+        // Construimos el objeto que corresponde al DTO de Java
+        const product = {
             registroProductoDTO: {
                 nombre: this.form.value.nombre,
                 descripcion: this.form.value.descripcion,
                 tipoCalzado: this.form.value.tipoCalzado,
-                imagen: this.form.value.imagen,
+                imagen: "", // El backend asignará la imagen después de subirla
                 precio: this.form.value.precio
             },
             tallas: this.form.value.tallas
         };
     
-        this.productService.create(product)
+        // Construimos el FormData para enviar tanto el JSON como el archivo
+        const formData = new FormData();
+        formData.append('producto', new Blob([JSON.stringify(product)], { type: 'application/json' }));
+        formData.append('file', this.selectedFile); // Adjuntamos el archivo seleccionado
+    
+        // Llamamos al servicio para enviar los datos al backend
+        this.productService.create(formData)
             .subscribe({
                 next: () => {
-                    this.router.navigate(['/']); // redirigir a la página principal
+                    this.router.navigate(['/']); // Redirigir a la página principal
                 },
                 error: error => {
                     console.error(error);
