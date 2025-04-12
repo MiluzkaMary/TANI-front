@@ -4,10 +4,24 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 
 import { AccountService, AlertService } from '@app/_services';
+import { trigger, transition, style, animate } from '@angular/animations';
+
 
 @Component({
     templateUrl: 'login.component.html',
-    standalone: false
+    standalone: false,
+    styleUrls: ['login.component.css'],
+    animations: [
+        trigger('fadeSlide', [
+            transition(':enter', [
+                style({ opacity: 0, transform: 'translateY(10px)' }),
+                animate('300ms ease-out', style({ opacity: 1, transform: 'translateY(0)' }))
+            ]),
+            transition(':leave', [
+                animate('300ms ease-in', style({ opacity: 0, transform: 'translateY(10px)' }))
+            ])
+        ])
+    ]
 })
 export class LoginComponent implements OnInit {
     form!: FormGroup;

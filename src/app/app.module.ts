@@ -1,7 +1,8 @@
-﻿import { NgModule, inject, provideAppInitializer } from '@angular/core';
+﻿import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { ReactiveFormsModule } from '@angular/forms';
-import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 // used to create fake backend
 import { fakeBackendProvider } from './_helpers';
@@ -14,27 +15,28 @@ import { AlertComponent } from './_components';
 import { HomeComponent } from './home';
 import { FileUploadModule } from 'primeng/fileupload';
 
-
-// Importa el nuevo módulo de productos
-import { ProductModule } from './product/product.module';
-
-@NgModule({ declarations: [
+@NgModule({
+    declarations: [
         AppComponent,
         AlertComponent,
         HomeComponent
     ],
-    bootstrap: [AppComponent], imports: [BrowserModule,
+    bootstrap: [AppComponent],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule, // Agregado para animaciones
         ReactiveFormsModule,
+        FormsModule, // Agregado para formularios basados en plantillas
+        HttpClientModule, // Agregado para compatibilidad con versiones anteriores
         AppRoutingModule,
-        FileUploadModule], providers: [
-        provideAppInitializer(() => {
-        const initializerFn = (appInitializer)(inject(AccountService));
-        return initializerFn();
-      }),
+        FileUploadModule
+    ],
+    providers: [
+        { provide: APP_INITIALIZER, useFactory: appInitializer, multi: true, deps: [AccountService] }, // Cambiado a APP_INITIALIZER
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
         // provider used to create fake backend
-        fakeBackendProvider,
-        provideHttpClient(withInterceptorsFromDi())
-    ] })
+        fakeBackendProvider
+    ]
+})
 export class AppModule { }

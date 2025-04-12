@@ -2,6 +2,8 @@
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
+import { trigger, transition, style, animate } from '@angular/animations';
+
 
 import { AccountService, AlertService } from '@app/_services';
 import { MustMatch } from '@app/_helpers';
@@ -9,7 +11,10 @@ import { Account } from '@app/_models';
 
 @Component({
     templateUrl: 'register.component.html',
-    standalone: false
+    standalone: false,
+    styleUrls: ['register.component.css'],
+    
+    //standalone: false
 })
 export class RegisterComponent implements OnInit {
     form!: FormGroup;

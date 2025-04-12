@@ -11,7 +11,7 @@
 
         <div class="mb-3">
             <label class="form-label">Descripción</label>
-            <input type="text" formControlName="descripcion" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.descripcion.errors }" />
+            <textarea formControlName="descripcion" class="form-control" rows="4" [ngClass]="{ 'is-invalid': submitted && f.descripcion.errors }"></textarea>
             <div *ngIf="submitted && f.descripcion?.errors" class="invalid-feedback">
                 <div *ngIf="f.descripcion.errors?.required">La descripción es obligatoria</div>
             </div>

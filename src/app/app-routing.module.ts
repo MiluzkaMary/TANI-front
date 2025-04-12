@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ResetPasswordComponent } from './account/reset-password.component';
+import { TermsComponent } from './terms/terms.component';
 
 
 import { HomeComponent } from './home';
@@ -20,6 +21,7 @@ const routes: Routes = [
     { path: 'admin', loadChildren: adminModule, canActivate: [AuthGuard], data: { roles: [Role.Admin] } },
     { path: 'productos', loadChildren: productModule, canActivate: [AuthGuard], data: { roles: [Role.Admin] } },
     { path: 'reset-password', component: ResetPasswordComponent },
+    { path: 'condiciones', component: TermsComponent },
 
     // otherwise redirect to home
     { path: '**', redirectTo: '' }
