@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { CommonModule } from '@angular/common'; // Importar CommonModule
 
 // used to create fake backend
 import { fakeBackendProvider } from './_helpers';
@@ -14,11 +15,17 @@ import { AppComponent } from './app.component';
 import { AlertComponent } from './_components';
 import { HomeComponent } from './home';
 import { FileUploadModule } from 'primeng/fileupload';
+import { CarritoComponent } from './carrito/carrito.component';
+import { PasarelaComponent } from './pasarela/pasarela.component';
+
+
 
 @NgModule({
     declarations: [
         AppComponent,
         AlertComponent,
+        CarritoComponent,
+        PasarelaComponent,
         HomeComponent
     ],
     bootstrap: [AppComponent],
@@ -29,6 +36,7 @@ import { FileUploadModule } from 'primeng/fileupload';
         FormsModule, // Agregado para formularios basados en plantillas
         HttpClientModule, // Agregado para compatibilidad con versiones anteriores
         AppRoutingModule,
+        CommonModule,
         FileUploadModule
     ],
     providers: [

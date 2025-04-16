@@ -9,4 +9,5 @@ export class Product {
         precio: number;
     };
     tallas?: ProductSize[];
+    selectedSize?: string; // Agregado para rastrear la talla seleccionada
 }

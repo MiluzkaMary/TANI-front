@@ -48,8 +48,11 @@
 <!-- Featured Products -->
 <section class="products-section">
   <div class="section-header">
-    <h2>Productos destacados</h2>
-    <a href="/products" class="view-all">Ver todos</a>
+    <h2>Productos</h2>
+    <!-- Botón visible solo para administradores -->
+    <button *ngIf="account?.tipoUsuario === 'ADMINISTRADOR'" class="btn btn-primary btn-create" routerLink="/productos/crear">
+      Crear Producto
+    </button>
   </div>
 
   <div class="products-grid">
@@ -59,56 +62,91 @@
       </div>
       <div class="product-info">
         <h3 class="product-name">{{ product.registroProductoDTO?.nombre }}</h3>
+        <p class="product-type">Tipo: {{ product.registroProductoDTO?.tipoCalzado }}</p>
+        <p class="product-description">{{ product.registroProductoDTO?.descripcion }}</p>
+
+    <!-- Sección de tallas -->
+<div class="product-sizes">
+  <label><strong>Tallas:</strong></label>
+  <div class="sizes-container">
+    <button 
+      *ngFor="let talla of product.tallas; let i = index" 
+      class="btn btn-outline-secondary btn-sm"
+      [class.active]="product.selectedSize === talla.talla" 
+      [disabled]="talla?.cantidad === 0"
+      (click)="product.selectedSize = talla.talla"> <!-- Actualiza la talla seleccionada -->
+      {{ talla.talla }}
+    </button>
+  </div>
+</div>
+
+    
         <div class="product-price">
           <span class="current-price">
             ${{ product.registroProductoDTO?.precio }}
           </span>
         </div>
       </div>
-      <button class="add-to-cart-button">
-        <i class="fa fa-shopping-cart"></i>
-        Agregar al carrito
-      </button>
+      <div class="product-actions">
+        <!-- Botones según el tipo de usuario -->
+        <button 
+          *ngIf="account?.tipoUsuario === 'ADMINISTRADOR'" 
+          class="btn btn-warning me-2">
+          Editar
+        </button>
+        <button 
+          *ngIf="account?.tipoUsuario === 'ADMINISTRADOR'" 
+          class="btn btn-danger">
+          Eliminar
+        </button>
+            <button 
+            *ngIf="account?.tipoUsuario !== 'ADMINISTRADOR'" 
+            class="add-to-cart-button"
+            (click)="addToCart(product); logAccountId()">
+            <i class="fa fa-shopping-cart"></i>
+            Añadir al Carrito
+            </button>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- Footer -->
 <footer class="footer">
-    <div class="footer-container">
-      <div class="footer-section">
-        <h3>Atención al cliente</h3>
-        <ul>
-          <li><a href="/contact">Contacto</a></li>
-          <li><a href="/faq">Preguntas frecuentes</a></li>
-          <li><a href="/returns">Devoluciones</a></li>
-        </ul>
-      </div>
-  
-      <div class="footer-section">
-        <h3>Acerca de nosotros</h3>
-        <ul>
-          <li><a href="/about">Quiénes somos</a></li>
-          <li><a href="/stores">Nuestras tiendas</a></li>
-          <li><a href="/careers">Trabaja con nosotros</a></li>
-        </ul>
-      </div>
-  
-      <div class="footer-section">
-        <h3>Síguenos</h3>
-        <div class="social-links">
-          <a href="#" class="social-link"><i class="fa fa-facebook"></i></a>
-          <a href="#" class="social-link"><i class="fa fa-instagram"></i></a>
-          <a href="#" class="social-link"><i class="fa fa-twitter"></i></a>
-        </div>
+  <div class="footer-container">
+    <div class="footer-section">
+      <h3>Atención al cliente</h3>
+      <ul>
+        <li><a href="/contact">Contacto</a></li>
+        <li><a href="/faq">Preguntas frecuentes</a></li>
+        <li><a href="/returns">Devoluciones</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-section">
+      <h3>Acerca de nosotros</h3>
+      <ul>
+        <li><a href="/about">Quiénes somos</a></li>
+        <li><a href="/stores">Nuestras tiendas</a></li>
+        <li><a href="/careers">Trabaja con nosotros</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-section">
+      <h3>Síguenos</h3>
+      <div class="social-links">
+        <a href="#" class="social-link"><i class="fa fa-facebook"></i></a>
+        <a href="#" class="social-link"><i class="fa fa-instagram"></i></a>
+        <a href="#" class="social-link"><i class="fa fa-twitter"></i></a>
       </div>
     </div>
-  
-    <div class="footer-bottom">
-      <p>© 2025 ShoeStore. Todos los derechos reservados.</p>
-      <div class="footer-links">
-        <a href="/terms">Términos y condiciones</a>
-        <a href="/privacy">Política de privacidad</a>
-      </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>© 2025 ShoeStore. Todos los derechos reservados.</p>
+    <div class="footer-links">
+      <a href="/terms">Términos y condiciones</a>
+      <a href="/privacy">Política de privacidad</a>
     </div>
-  </footer>
+  </div>
+</footer>
