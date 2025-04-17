@@ -4,7 +4,7 @@
 
 export const environment = {
     production: false,
-    apiUrl: 'https://tani-456312.uc.r.appspot.com/'
+    apiUrl: 'https://tani-457105.uc.r.appspot.com/'
 };
 
 /*
