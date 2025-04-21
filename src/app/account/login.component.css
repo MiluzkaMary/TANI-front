@@ -143,3 +143,15 @@
   color: #333;
   font-size: 14px;
 }
+
+.forgot-password-link {
+  display: inline-block;
+  text-align: center;
+  font-size: 14px;
+  color: #007bff;
+  text-decoration: none;
+}
+
+.forgot-password-link:hover {
+  text-decoration: underline;
+}
