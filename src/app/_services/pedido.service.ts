@@ -30,4 +30,9 @@ export class PedidoService {
         // Enviar una solicitud DELETE al backend para eliminar el detalle
         return this.http.delete(`${baseUrl}/detalle/${idDetalle}`);
     }
+
+        terminarPago(idPedido: number) {
+        // Llamar al endpoint para terminar el pago del pedido
+        return this.http.put(`${baseUrl}/terminar-pago/${idPedido}`, {});
+    }
 }

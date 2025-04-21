@@ -3,6 +3,7 @@ import { PedidoCarrito } from '@app/_models/pedidoCarrito';
 import { PedidoService } from '@app/_services/pedido.service';
 import { AccountService } from '@app/_services/account.service';
 import { Account } from '@app/_models/account'; // Asegúrate de importar el modelo de Account
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-pasarela',
@@ -19,7 +20,8 @@ export class PasarelaComponent implements OnInit {
 
   constructor(
     private pedidoService: PedidoService,
-    private accountService: AccountService
+    private accountService: AccountService,
+    private router: Router 
   ) {}
 
   
@@ -57,9 +59,26 @@ export class PasarelaComponent implements OnInit {
     );
   }
 
-  procesarPago(): void {
-    console.log('Procesando el pago...');
-    // Aquí puedes agregar la lógica para enviar los datos al backend
+    procesarPago(): void {
+      if (this.pedido.idPedido) {
+          console.log('Procesando el pago para el pedido con ID:', this.pedido.idPedido);
+  
+          this.pedidoService.terminarPago(this.pedido.idPedido).subscribe({
+              next: () => {
+                  console.log('Pago procesado exitosamente.');
+                  alert('El pago se ha procesado correctamente.');
+                  // Aquí puedes redirigir al usuario o limpiar el formulario si es necesario
+                  this.router.navigate(['/']);
+                },
+              error: (error) => {
+                  console.error('Error al procesar el pago:', error);
+                  alert('Hubo un error al procesar el pago. Por favor, inténtalo de nuevo.');
+              }
+          });
+      } else {
+          console.error('No se encontró un ID de pedido para procesar el pago.');
+          alert('No se encontró un pedido válido para procesar el pago.');
+      }
   }
 
   logAccountId(): void {
