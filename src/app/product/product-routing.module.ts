@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { ProductEditComponent } from './product-edit.component';
 
 
 import { LayoutComponent } from './layout.component';
@@ -10,6 +11,8 @@ const routes: Routes = [
         path: '', component: LayoutComponent,
         children: [
             { path: 'crear', component: ProductCreateComponent },
+            { path: 'editar', component: ProductEditComponent } // Ruta sin parámetro
+
             // otras rutas relacionadas con productos si es necesario
         ]
     }

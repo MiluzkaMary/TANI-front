@@ -7,6 +7,7 @@ import { DetallePedido } from '@app/_models/detallepedido'; // Ensure this path 
 import { Pedido } from '@app/_models/pedido';
 import { RegistroPedidoDTO } from '@app/_models/registroPedido'; // Ensure this path is correct
 import { RegistroDetallePedidoDTO } from '@app/_models/registroDetallePedido'; // Ensure this path is correct
+import { Router } from '@angular/router';
 
 
 
@@ -32,7 +33,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   constructor(
     private accountService: AccountService,
     private productService: ProductService,
-    private pedidoService: PedidoService
+    private pedidoService: PedidoService,
+    private router: Router // Importar el servicio Router
   ) {}
 
   ngOnInit(): void {
@@ -100,6 +102,11 @@ export class HomeComponent implements OnInit, OnDestroy {
 }
 
 
+editProduct(product: Product): void {
+  console.log('Producto enviado a editar:', product);
+  this.productService.setProductoElegido(product);
+  this.router.navigate(['/productos/editar']);
+}
 
   loadPromotions(): void {
     this.promotions = [

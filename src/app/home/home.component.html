@@ -89,11 +89,12 @@
       </div>
       <div class="product-actions">
         <!-- Botones según el tipo de usuario -->
-        <button 
-          *ngIf="account?.tipoUsuario === 'ADMINISTRADOR'" 
-          class="btn btn-warning me-2">
-          Editar
-        </button>
+                        <button 
+                  *ngIf="account?.tipoUsuario === 'ADMINISTRADOR'" 
+                  class="btn btn-warning me-2"
+                  (click)="editProduct(product)">
+                  Editar
+                </button>
         <button 
           *ngIf="account?.tipoUsuario === 'ADMINISTRADOR'" 
           class="btn btn-danger">

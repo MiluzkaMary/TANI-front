@@ -3,6 +3,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { FileUploadModule } from 'primeng/fileupload'; // Importar FileUploadModule
 
+import { ProductEditComponent } from './product-edit.component';
+
 import { ProductRoutingModule } from './product-routing.module';
 import { LayoutComponent } from './layout.component';
 import { ProductCreateComponent } from './product-create.component';
@@ -16,6 +18,7 @@ import { ProductCreateComponent } from './product-create.component';
     ],
     declarations: [
         LayoutComponent,
+        ProductEditComponent,
         ProductCreateComponent
     ]
 })
