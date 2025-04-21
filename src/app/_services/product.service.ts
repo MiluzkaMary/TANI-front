@@ -45,7 +45,7 @@ export class ProductService {
       return this.http.get<Product>(`${baseUrl}/${id}`);
     }
     
-        update(productoNombre: string, productoConTallasDTO: any) {
+    update(productoNombre: string, productoConTallasDTO: any) {
         const formData = new FormData();
         formData.append('productoNombre', productoNombre); // Nombre del producto anterior
         formData.append('productoConTallasDTO', new Blob([JSON.stringify(productoConTallasDTO)], { type: 'application/json' })); // Objeto ProductoConTallasDTO
