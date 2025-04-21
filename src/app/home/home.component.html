@@ -95,11 +95,27 @@
                   (click)="editProduct(product)">
                   Editar
                 </button>
-        <button 
-          *ngIf="account?.tipoUsuario === 'ADMINISTRADOR'" 
-          class="btn btn-danger">
-          Eliminar
-        </button>
+                                <!-- Botón Eliminar -->
+                <button 
+                  *ngIf="account?.tipoUsuario === 'ADMINISTRADOR'" 
+                  class="btn btn-danger"
+                  (click)="openDeleteModal(product)">
+                  Eliminar
+                </button>
+                
+                <!-- Modal de confirmación -->
+                <div class="modal-overlay" *ngIf="showDeleteModal">
+                  <div class="modal-container">
+                    <h3>¿Estás seguro de que deseas eliminar este producto?</h3>
+                    <p><strong>Nombre:</strong> {{ selectedProduct?.registroProductoDTO?.nombre }}</p>
+                    <p><strong>Descripción:</strong> {{ selectedProduct?.registroProductoDTO?.descripcion }}</p>
+                    <p><strong>Precio:</strong> ${{ selectedProduct?.registroProductoDTO?.precio }}</p>
+                    <div class="modal-actions">
+                      <button class="btn btn-danger" (click)="confirmDelete()">Sí, eliminar</button>
+                      <button class="btn btn-secondary" (click)="closeDeleteModal()">Cancelar</button>
+                    </div>
+                  </div>
+                </div>
             <button 
             *ngIf="account?.tipoUsuario !== 'ADMINISTRADOR'" 
             class="add-to-cart-button"

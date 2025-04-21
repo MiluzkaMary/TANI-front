@@ -28,6 +28,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   products: Product[] = [];
   promotions: Promotion[] = [];
   currentSlide = 0;
+  selectedProduct?: Product; // Producto seleccionado para eliminar
+showDeleteModal = false; // Controla la visibilidad del modal
+
   private autoSlideInterval: any;
 
   constructor(
@@ -108,6 +111,21 @@ editProduct(product: Product): void {
   this.router.navigate(['/productos/editar']);
 }
 
+deleteProduct(product: Product): void {
+    if (confirm(`¿Estás seguro de que deseas eliminar el producto "${product.registroProductoDTO?.nombre}"?`)) {
+        this.productService.delete(product).subscribe({
+            next: () => {
+                console.log(`Producto "${product.registroProductoDTO?.nombre}" eliminado exitosamente.`);
+                // Actualizar la lista de productos después de eliminar
+                this.products = this.products.filter(p => p !== product);
+            },
+            error: (error) => {
+                console.error('Error al eliminar el producto:', error);
+            }
+        });
+    }
+}
+
   loadPromotions(): void {
     this.promotions = [
       {
@@ -130,6 +148,32 @@ editProduct(product: Product): void {
       }
     ];
   }
+
+  openDeleteModal(product: Product): void {
+    this.selectedProduct = product;
+    this.showDeleteModal = true;
+  }
+  
+  closeDeleteModal(): void {
+    this.showDeleteModal = false;
+    this.selectedProduct = undefined;
+  }
+  
+        confirmDelete(): void {
+        if (this.selectedProduct) {
+            console.log('Producto enviado para eliminar:', this.selectedProduct); // Verifica los datos enviados
+            this.productService.delete(this.selectedProduct).subscribe({
+                next: () => {
+                    console.log(`Producto "${this.selectedProduct?.registroProductoDTO?.nombre}" eliminado exitosamente.`);
+                    this.products = this.products.filter(p => p !== this.selectedProduct);
+                    this.closeDeleteModal();
+                },
+                error: (error) => {
+                    console.error('Error al eliminar el producto:', error);
+                }
+            });
+        }
+    }
 
   startAutoSlide(): void {
     this.autoSlideInterval = setInterval(() => {

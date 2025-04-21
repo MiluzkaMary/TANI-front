@@ -53,4 +53,15 @@ export class ProductService {
         return this.http.put(`${baseUrl}/editar-producto`, formData);
     }
 
+                 delete(product: Product) {
+                    const productName = product.registroProductoDTO?.nombre; // Obtener el nombre del producto
+                    console.log('Nombre del producto enviado al backend para eliminar:', productName); // Verifica el valor aquí
+                    if (!productName) {
+                        throw new Error('El nombre del producto no puede ser undefined');
+                    }
+                    return this.http.delete(`${baseUrl}/eliminar-producto`, {
+                        params: { nombre: productName } // Enviar el nombre como parámetro de consulta
+                    });
+        }
+
 }
